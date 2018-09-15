@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Dashboard from './containers/Dashboard';
+import Dashboard from './components/pages/Dashboard';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import Layout from './components/UI/Layout';
