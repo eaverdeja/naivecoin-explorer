@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { hashResume } from '../../utils';
+import moment from 'moment'
 
 const styles = theme => ({
   root: {
@@ -63,6 +64,9 @@ const unconfirmedTransactions = ({
           <div className={classes.root}>
             <Typography variant="display1" gutterBottom>
               Unconfirmed Transactions
+            </Typography>
+            <Typography variant="caption" gutterBottom>
+              Last update: {moment().format("DD/MM/YYYY, h:mm:ss")}
             </Typography>
             <Paper>
               <Table className={classes.table}>

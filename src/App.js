@@ -1,8 +1,10 @@
 import React from 'react';
 import './App.css';
 import Dashboard from './components/pages/Dashboard';
+import Block from './containers/blockchain/Block';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Layout from './components/UI/Layout';
 
 const client = new ApolloClient({
@@ -10,11 +12,14 @@ const client = new ApolloClient({
 });
 
 const App = () => (
-  <ApolloProvider client={client}>
-    <Layout>
-      <Dashboard />
-    </Layout>
-  </ApolloProvider>
+  <Router>
+    <ApolloProvider client={client}>
+      <Layout>
+        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/blocks/:blockHash" component={Block} />
+      </Layout>
+    </ApolloProvider>
+  </Router>
 );
 
 export default App;

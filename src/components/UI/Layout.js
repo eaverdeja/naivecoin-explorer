@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,7 +12,8 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { sidebar } from './Sidebar';
+import { Route } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 const drawerWidth = 240;
 
@@ -78,8 +80,24 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit,
     height: '100vh',
-    overflowX: 'auto',
+    overflowX: 'auto'
+  }
+});
+
+const theme = createMuiTheme({
+  palette: {
+    accent2Color: '#455a64',
+    accent3Color: '#ff9800',
+    accent1Color: '#64ffda',
+    canvasColor: '#607d8b'
+  },
+  paper: {
+    backgroundColor: '#00838f'
+  },
+  typography: {
+    htmlFontSize: 15
   }
 });
 
@@ -100,7 +118,7 @@ class Layout extends Component {
     const { classes, children } = this.props;
 
     return (
-      <React.Fragment>
+      <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <div className={classes.root}>
           <AppBar
@@ -152,14 +170,16 @@ class Layout extends Component {
               </IconButton>
             </div>
             <Divider />
-            <List>{sidebar}</List>
+            <List>
+              <Route path="/" component={Sidebar} />
+            </List>
           </Drawer>
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             {children}
           </main>
         </div>
-      </React.Fragment>
+      </MuiThemeProvider>
     );
   }
 }

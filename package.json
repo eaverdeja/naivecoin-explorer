@@ -7,11 +7,13 @@
     "@material-ui/icons": "^3.0.1",
     "apollo-boost": "^0.1.15",
     "graphql": "^14.0.2",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "react": "^16.5.0",
     "react-apollo": "^2.1.11",
     "react-dom": "^16.5.0",
     "react-json-view": "^1.19.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5"
   },
   "scripts": {

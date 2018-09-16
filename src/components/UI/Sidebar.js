@@ -6,13 +6,13 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 
-export const sidebar = (
+const sidebar = ({ history }) => (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <GroupWorkIcon />
+        <GroupWorkIcon onClick={() => history.push('/')} />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Dashboard" onClick={() => history.push('/')} />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -28,3 +28,5 @@ export const sidebar = (
     </ListItem>
   </div>
 );
+
+export default sidebar;

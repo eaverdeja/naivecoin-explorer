@@ -1,11 +1,11 @@
 import React from 'react';
 import LatestBlocks from '../../containers/blockchain/LatestBlocks';
-import UnconfirmedTransactions from '../../containers/blockchain/UnconfirmedTransactions';
+import UnconfirmedTransactions from '../../containers/transactions/UnconfirmedTransactions';
 import BlockJsonTree from '../../containers/blockchain/BlockJsonTree';
 
-const dashboard = () => (
+const dashboard = props => (
   <React.Fragment>
-    <LatestBlocks />
+    <LatestBlocks {...props} />
     <UnconfirmedTransactions />
     <BlockJsonTree />
   </React.Fragment>
