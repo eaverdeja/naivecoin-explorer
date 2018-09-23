@@ -8,15 +8,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import { hashResume } from '../../utils';
 import moment from 'moment'
+import Panel from '../../components/UI/Panel';
+import Queries from '../../graphql/queries'
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3
-  },
   table: {
     minWidth: 700
   },
@@ -27,27 +24,6 @@ const styles = theme => ({
   }
 });
 
-const GET_UNCONFIRMED_TRANSACTIONS = gql`
-  query {
-    unconfirmedTransactions {
-      id
-      hash
-      type
-      inputs {
-        transaction
-        index
-        amount
-        address
-        signature
-      }
-      outputs {
-        amount
-        address
-      }
-    }
-  }
-`;
-
 const unconfirmedTransactions = ({
   transactions,
   classes,
@@ -55,16 +31,13 @@ const unconfirmedTransactions = ({
   pollInterval = 3000
 }) => {
   return (
-    <Query query={GET_UNCONFIRMED_TRANSACTIONS} pollInterval={pollInterval}>
+    <Query query={Queries.GET_UNCONFIRMED_TRANSACTIONS} pollInterval={pollInterval}>
       {({ loading, error, data }) => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>;
 
         return (
-          <div className={classes.root}>
-            <Typography variant="display1" gutterBottom>
-              Unconfirmed Transactions
-            </Typography>
+          <Panel title="Unconfirmed Transactions">
             <Typography variant="caption" gutterBottom>
               Last update: {moment().format("DD/MM/YYYY, h:mm:ss")}
             </Typography>
@@ -99,7 +72,7 @@ const unconfirmedTransactions = ({
                 </TableBody>
               </Table>
             </Paper>
-          </div>
+          </Panel>
         );
       }}
     </Query>

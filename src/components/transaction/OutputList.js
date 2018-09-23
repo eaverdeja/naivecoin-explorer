@@ -8,11 +8,11 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { hashResume } from '../../utils';
 
-const outputList = ({ outputs }) => {
+const outputList = ({ txId, outputs }) => {
   return (
     <List subheader={<ListSubheader component="div">Ouputs</ListSubheader>}>
-      {outputs.map(output => (
-        <React.Fragment key={output.address + output.amount}>
+      {outputs.map((output, index) => (
+        <React.Fragment key={output.address + txId + index}>
           <Divider light />
           <ListItem>
             <ListItemText primary={hashResume(output.address, 8)} />

@@ -16,9 +16,9 @@ const sidebar = ({ history }) => (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <AccountBalanceWalletIcon />
+        <AccountBalanceWalletIcon onClick={() => history.push('/wallets')} />
       </ListItemIcon>
-      <ListItemText primary="Wallets" />
+      <ListItemText primary="Wallets" onClick={() => history.push('/wallets')} />
     </ListItem>
     <ListItem button>
       <ListItemIcon>

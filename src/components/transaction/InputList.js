@@ -8,20 +8,26 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { hashResume } from '../../utils';
 
-const inputList = ({ inputs }) => {
+const inputList = ({ inputs, txId }) => {
   return (
     <List subheader={<ListSubheader component="div">Inputs</ListSubheader>}>
-      {inputs.map(input => (
-        <React.Fragment key={input.address + input.transaction + input.amount}>
-          <Divider light />
-          <ListItem>
-            <ListItemText primary={hashResume(input.address, 8)} />
-            <ListItemSecondaryAction>
-              <Typography variant="caption">{input.amount} NC</Typography>
-            </ListItemSecondaryAction>
-          </ListItem>
-        </React.Fragment>
-      ))}
+      {inputs.length ? (
+        inputs.map((input, index) => (
+          <React.Fragment key={input.address + txId + index}>
+            <Divider light />
+            <ListItem>
+              <ListItemText primary={hashResume(input.address, 8)} />
+              <ListItemSecondaryAction>
+                <Typography variant="caption">{input.amount} NC</Typography>
+              </ListItemSecondaryAction>
+            </ListItem>
+          </React.Fragment>
+        ))
+      ) : (
+        <ListItem>
+          <ListItemText secondary="No inputs (newly generated coins)" />
+        </ListItem>
+      )}
     </List>
   );
 };

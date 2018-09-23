@@ -13,11 +13,18 @@ import moment from 'moment';
 const styles = theme => ({
   card: {
     minWidth: '90%',
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * 2,
+    '&:first-child': {
+      marginTop: 0
+    },
+    '&:last-child': {
+      marginBottom: theme.spacing.unit * 3
+    }
   },
   transaction: {
     fontSize: '1.2rem',
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
+    cursor: 'pointer'
   },
   regularTx: {
     backgroundColor: '#cfd8dc'
@@ -28,12 +35,15 @@ const styles = theme => ({
   rewardTx: {
     backgroundColor: '#ef5350',
     color: 'white'
+  },
+  capitalize: {
+    textTransform: 'capitalize'
   }
 });
 
-const transactionSummary = ({ transaction, classes, className }) => {
+const transactionSummary = ({ transaction, classes, history }) => {
   return (
-    <Card className={className + ' ' + classes.card}>
+    <Card className={classes.card}>
       <CardContent>
         <Grid container spacing={24}>
           <Grid item xs={12}>
@@ -45,20 +55,34 @@ const transactionSummary = ({ transaction, classes, className }) => {
               })}
               title={`ID | ${transaction.id}`}
               subheader={
-                <Typography variant="caption">
-                  {`Mined at (fake for now!): ${moment().format(
-                    'dddd, MMMM Do YYYY, h:mm:ss a'
-                  )}`}
-                </Typography>
+                <React.Fragment>
+                  <Typography variant="caption">
+                    {`Mined at (fake for now!): ${moment().format(
+                      'dddd, MMMM Do YYYY, h:mm:ss a'
+                    )}`}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    align="right"
+                    className={classNames(classes.capitalize, {
+                      [classes.regularTx]: transaction.type === 'regular',
+                      [classes.feeTx]: transaction.type === 'fee',
+                      [classes.rewardTx]: transaction.type === 'reward'
+                    })}
+                  >
+                    {transaction.type}
+                  </Typography>
+                </React.Fragment>
               }
               disableTypography
+              onClick={() => history.push('/transactions/' + transaction.id)}
             />
           </Grid>
           <Grid item xs={6}>
-            <InputList inputs={transaction.inputs} />
+            <InputList inputs={transaction.inputs} txId={transaction.id} />
           </Grid>
           <Grid item xs={6}>
-            <OutputList outputs={transaction.outputs} />
+            <OutputList outputs={transaction.outputs} txId={transaction.id} />
           </Grid>
         </Grid>
       </CardContent>

@@ -1,16 +1,12 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import ReactJson from 'react-json-view';
+import Panel from '../../components/UI/Panel';
+import Queries from '../../graphql/queries';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3
-  },
   jsonTree: {
     width: '100%',
     maxHeight: '70vh',
@@ -19,39 +15,9 @@ const styles = theme => ({
   }
 });
 
-const GET_ALL_BLOCKS = gql`
-  query {
-    blocks {
-      index
-      nonce
-      previousHash
-      timestamp
-      hash
-      transactions {
-        id
-        hash
-        type
-        inputs {
-          transaction
-          index
-          amount
-          address
-          signature
-        }
-        outputs {
-          amount
-          address
-        }
-      }
-    }
-  }
-`
-
 const blockJsonTree = ({ blocks, classes, limit = 2, depth = 0 }) => {
   return (
-    <Query
-      query={GET_ALL_BLOCKS}
-    >
+    <Query query={Queries.GET_ALL_BLOCKS}>
       {({ loading, error, data }) => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>;
@@ -61,14 +27,11 @@ const blockJsonTree = ({ blocks, classes, limit = 2, depth = 0 }) => {
         const blocks = JSON.parse(JSON.stringify(data.blocks), omitTypename);
 
         return (
-          <div className={classes.root}>
-            <Typography variant="display1" gutterBottom>
-              All Blocks (JSON view)
-            </Typography>
+          <Panel title="All Blocks (JSON view)">
             <Paper className={classes.jsonTree}>
               <ReactJson collapsed={depth} src={blocks} />
             </Paper>
-          </div>
+          </Panel>
         );
       }}
     </Query>

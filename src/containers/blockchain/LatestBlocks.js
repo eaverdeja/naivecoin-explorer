@@ -10,15 +10,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider/Divider';
 import Button from '@material-ui/core/Button/Button';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import { hashResume } from '../../utils';
 import moment from 'moment';
+import Panel from '../../components/UI/Panel';
+import Queries from '../../graphql/queries'
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3
-  },
   table: {
     minWidth: 700
   },
@@ -40,21 +37,6 @@ const styles = theme => ({
   }
 });
 
-const GET_LATEST_BLOCKS = gql`
-  query {
-    blocks {
-      index
-      nonce
-      previousHash
-      timestamp
-      hash
-      transactions {
-        id
-      }
-    }
-  }
-`;
-
 const latestBlocks = ({
   blocks,
   classes,
@@ -62,16 +44,13 @@ const latestBlocks = ({
   pollInterval = 3000,
   history
 }) => (
-  <Query query={GET_LATEST_BLOCKS} pollInterval={pollInterval}>
+  <Query query={Queries.GET_LATEST_BLOCKS} pollInterval={pollInterval}>
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error :(</p>;
 
       return (
-        <div className={classes.root}>
-          <Typography variant="display1" gutterBottom>
-            Latest Blocks
-          </Typography>
+        <Panel title="Latest Blocks">
           <Typography variant="caption" gutterBottom>
             Last update: {moment().format('DD/MM/YYYY, h:mm:ss')}
           </Typography>
@@ -112,7 +91,7 @@ const latestBlocks = ({
               </Button>
             </div>
           </Paper>
-        </div>
+        </Panel>
       );
     }}
   </Query>
