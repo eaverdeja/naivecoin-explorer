@@ -4,7 +4,8 @@ import Dashboard from './pages/Dashboard';
 import Wallets from './pages/Wallets';
 import Wallet from './pages/Wallet';
 import Address from './pages/Address';
-import Transaction from './pages/Transaction';
+import Operator from './pages/Operator';
+import Transaction from './containers/transactions/Transaction';
 import Block from './containers/blockchain/Block';
 import Layout from './components/UI/Layout';
 import ApolloClient from 'apollo-boost';
@@ -25,6 +26,7 @@ const App = () => (
         <Route exact path="/address/:address/details" component={Address} />
         <Route exact path="/blocks/:blockHash" component={Block} />
         <Route exact path="/transactions/:transactionId" component={Transaction} />
+        <Route exact path="/operator" component={Operator} />
       </Layout>
     </ApolloProvider>
   </Router>

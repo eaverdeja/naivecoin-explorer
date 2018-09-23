@@ -24,7 +24,7 @@ const sidebar = ({ history }) => (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Blocks" />
+      <ListItemText primary="Operator" onClick={() => history.push('/operator')} />
     </ListItem>
   </div>
 );
