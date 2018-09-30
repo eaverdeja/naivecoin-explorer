@@ -16,9 +16,6 @@ import Panel from '../../components/UI/Panel';
 import Queries from '../../graphql/queries'
 
 const styles = theme => ({
-  table: {
-    minWidth: 700
-  },
   row: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default
@@ -55,7 +52,7 @@ const latestBlocks = ({
             Last update: {moment().format('DD/MM/YYYY, h:mm:ss')}
           </Typography>
           <Paper>
-            <Table className={classes.table}>
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>Height</TableCell>

@@ -1,15 +1,22 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography/Typography';
-import CreateTransaction from '../containers/transactions/CreateTransaction'
-import MineBlock from '../containers/operator/MineBlock'
+import Grid from '@material-ui/core/Grid/Grid';
+import CreateTransaction from '../containers/transactions/CreateTransaction';
+import MineBlock from '../containers/operator/MineBlock';
 
 const operator = props => (
   <React.Fragment>
     <Typography variant="display1" align="center">
       Operator
     </Typography>
-    <CreateTransaction />
-    <MineBlock />
+    <Grid container spacing={24}>
+      <Grid item xs={6}>
+        <CreateTransaction />
+      </Grid>
+      <Grid item xs={6}>
+        <MineBlock />
+      </Grid>
+    </Grid>
   </React.Fragment>
 );
 

@@ -241,7 +241,7 @@ class CreateTransaction extends Component {
                   render={({ field }) => password(field)}
                 />
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={10}>
                 <Field
                   name="toAddress"
                   render={({ field }) => toAddress(field)}

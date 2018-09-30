@@ -22,7 +22,7 @@ const sidebar = ({ history }) => (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <DashboardIcon />
+        <DashboardIcon onClick={() => history.push('/operator')}/>
       </ListItemIcon>
       <ListItemText primary="Operator" onClick={() => history.push('/operator')} />
     </ListItem>

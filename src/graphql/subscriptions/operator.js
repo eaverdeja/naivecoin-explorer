@@ -9,4 +9,10 @@ const BLOCK_MINED = gql`
   }
 `;
 
-export { BLOCK_MINED };
+const SERVER_LOG_UPDATE = gql`
+  subscription {
+    serverLogUpdate
+  }
+`
+
+export { BLOCK_MINED, SERVER_LOG_UPDATE };

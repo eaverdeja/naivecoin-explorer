@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import InputList from './InputList';
 import OutputList from './OutputList';
 import moment from 'moment';
+import { hashResume } from '../../utils/index';
 
 const styles = theme => ({
   card: {
@@ -53,7 +54,7 @@ const transactionSummary = ({ transaction, classes, history }) => {
                 [classes.feeTx]: transaction.type === 'fee',
                 [classes.rewardTx]: transaction.type === 'reward'
               })}
-              title={`ID | ${transaction.id}`}
+              title={`ID | ${hashResume(transaction.id, 16)}`}
               subheader={
                 <React.Fragment>
                   <Typography variant="caption">

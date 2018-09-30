@@ -10,7 +10,7 @@ import { hashResume } from '../../utils';
 
 const outputList = ({ txId, outputs }) => {
   return (
-    <List subheader={<ListSubheader component="div">Ouputs</ListSubheader>}>
+    <List subheader={<ListSubheader component="div">Outputs</ListSubheader>}>
       {outputs.map((output, index) => (
         <React.Fragment key={output.address + txId + index}>
           <Divider light />

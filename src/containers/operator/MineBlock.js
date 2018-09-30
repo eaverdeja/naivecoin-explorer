@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Query, Mutation, Subscription } from 'react-apollo';
+import { Mutation, Subscription } from 'react-apollo';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/core/styles';
@@ -22,7 +22,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3
   },
   loading: {
-    margin: theme.spacing.unit * 6,
+    margin: theme.spacing.unit * 6
   }
 });
 
@@ -30,21 +30,26 @@ class MineBlock extends Component {
   state = {
     mining: false,
     notifying: false
+  };
+
+  constructor(props) {
+    super(props);
+    this.terminal = React.createRef();
   }
 
   handleMineBlock = mineBlock => {
     mineBlock();
-    this.setState({ mining: true })
+    this.setState({ mining: true });
   };
 
-  handleMinedBlock = () => this.setState({ mining: false, notifying: true })
+  handleMinedBlock = () => this.setState({ mining: false, notifying: true });
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    this.setState({ notifying: false })
+    this.setState({ notifying: false });
   };
 
   render() {
@@ -61,8 +66,7 @@ class MineBlock extends Component {
         onClose={this.handleClose}
         message={
           <span>
-            Mined block with Index: {index} & Hash:{' '}
-            {hashResume(hash)}
+            Mined block with Index: {index} & Hash: {hashResume(hash)}
           </span>
         }
       />
@@ -80,31 +84,32 @@ class MineBlock extends Component {
         {(mineBlock, { loading, error }) => (
           <React.Fragment>
             <Panel className={classes.root} title="Mine Block">
-              <Button
-                variant="contained"
-                className={classes.button}
-                onClick={() => this.handleMineBlock(mineBlock)}
-              >
-                Mine
-              </Button>
+              <Grid container spacing={24}>
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    className={classes.button}
+                    onClick={() => this.handleMineBlock(mineBlock)}
+                  >
+                    Mine
+                  </Button>
+                </Grid>
+              </Grid>
             </Panel>
             <Subscription subscription={Subscriptions.BLOCK_MINED}>
               {({ data, loading }) => {
-                if (loading && this.state.mining) return (
-                  <div className={classes.loading}>
-                    <CircularProgress />
-                  </div>
-                );
+                if (loading && this.state.mining)
+                  return (
+                    <div className={classes.loading}>
+                      <CircularProgress />
+                    </div>
+                  );
                 if (loading || !data) return null;
 
                 const { blockMined } = data;
                 const { index, hash } = blockMined;
-                
-                return (
-                  <MinedBlockSnackbar
-                    index={index}
-                    hash={hash} />
-                )
+
+                return <MinedBlockSnackbar index={index} hash={hash} />;
               }}
             </Subscription>
           </React.Fragment>

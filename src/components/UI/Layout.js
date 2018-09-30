@@ -14,6 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Route } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import ServerLog from '../../containers/operator/ServerLog';
 
 const drawerWidth = 240;
 
@@ -65,7 +66,7 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen
     })
   },
-  drawerPaperClose: {
+  paperDrawerClose: {
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -75,6 +76,12 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing.unit * 9
     }
+  },
+  serverLogDrawer: {
+    width: theme.spacing.unit * 60,
+  },
+  serverLogDrawerClose: {
+    width: theme.spacing.unit
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -103,15 +110,16 @@ const theme = createMuiTheme({
 
 class Layout extends Component {
   state = {
-    open: true
+    sidebarOpen: false,
+    serverLogOpen: true
   };
 
   handleDrawerOpen = () => {
-    this.setState({ open: true });
+    this.setState({ sidebarOpen: true, serverLogOpen: false });
   };
 
   handleDrawerClose = () => {
-    this.setState({ open: false });
+    this.setState({ sidebarOpen: false, serverLogOpen: true });
   };
 
   render() {
@@ -125,12 +133,12 @@ class Layout extends Component {
             position="absolute"
             className={classNames(
               classes.appBar,
-              this.state.open && classes.appBarShift
+              this.state.sidebarOpen && classes.appBarShift
             )}
           >
             {' '}
             <Toolbar
-              disableGutters={!this.state.open}
+              disableGutters={!this.state.sidebarOpen}
               className={classes.toolbar}
             >
               <IconButton
@@ -139,7 +147,7 @@ class Layout extends Component {
                 onClick={this.handleDrawerOpen}
                 className={classNames(
                   classes.menuButton,
-                  this.state.open && classes.menuButtonHidden
+                  this.state.sidebarOpen && classes.menuButtonHidden
                 )}
               >
                 <MenuIcon />
@@ -159,10 +167,10 @@ class Layout extends Component {
             classes={{
               paper: classNames(
                 classes.drawerPaper,
-                !this.state.open && classes.drawerPaperClose
+                !this.state.sidebarOpen && classes.paperDrawerClose
               )
             }}
-            open={this.state.open}
+            open={this.state.sidebarOpen}
           >
             <div className={classes.toolbarIcon}>
               <IconButton onClick={this.handleDrawerClose}>
@@ -178,6 +186,23 @@ class Layout extends Component {
             <div className={classes.appBarSpacer} />
             {children}
           </main>
+          <Drawer
+            variant="permanent"
+            anchor="right"
+            classes={{
+              paper: classNames(
+                classes.drawerPaper,
+                classes.serverLogDrawer,
+                !this.state.serverLogOpen && classes.serverLogDrawerClose,
+                !this.state.serverLogOpen && classes.paperDrawerClose
+              )
+            }}
+            open={this.state.serverLogOpen}
+          >
+            <div className={classes.serverLog}>
+              <ServerLog />
+            </div>
+          </Drawer>
         </div>
       </MuiThemeProvider>
     );
