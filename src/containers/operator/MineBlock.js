@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Mutation, Subscription } from 'react-apollo';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid/Grid';
-import Panel from '../../components/UI/Panel';
-import Mutations from '../../graphql/mutations';
-import Subscriptions from '../../graphql/subscriptions';
-import { hashResume } from '../../utils';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import React, { Component } from 'react'
+import { Mutation, Subscription } from 'react-apollo'
+import Button from '@material-ui/core/Button'
+import Snackbar from '@material-ui/core/Snackbar'
+import { withStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid/Grid'
+import Panel from '../../components/UI/Panel'
+import Mutations from '../../graphql/mutations'
+import Subscriptions from '../../graphql/subscriptions'
+import { hashResume } from '../../utils'
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 
 const styles = theme => ({
   root: {
@@ -24,36 +24,36 @@ const styles = theme => ({
   loading: {
     margin: theme.spacing.unit * 6
   }
-});
+})
 
 class MineBlock extends Component {
   state = {
     mining: false,
     notifying: false
-  };
+  }
 
   constructor(props) {
-    super(props);
-    this.terminal = React.createRef();
+    super(props)
+    this.terminal = React.createRef()
   }
 
   handleMineBlock = mineBlock => {
-    mineBlock();
-    this.setState({ mining: true });
-  };
+    mineBlock()
+    this.setState({ mining: true })
+  }
 
-  handleMinedBlock = () => this.setState({ mining: false, notifying: true });
+  handleMinedBlock = () => this.setState({ mining: false, notifying: true })
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
 
-    this.setState({ notifying: false });
-  };
+    this.setState({ notifying: false })
+  }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     const MinedBlockSnackbar = ({ index, hash }) => (
       <Snackbar
@@ -70,14 +70,14 @@ class MineBlock extends Component {
           </span>
         }
       />
-    );
+    )
 
     return (
       <Mutation
         mutation={Mutations.MINE_BLOCK}
         variables={{
           rewardAddress:
-            'fd4a2c20d7d9125b008180e426b12bc758ecf2990f8ba9cee9afa3e722f7d2c8'
+            '1bdb5b0eed39cfa998389f4e9aa188c53e18e0eb9949a40980025ca825f9daad'
         }}
         onCompleted={this.handleMinedBlock}
       >
@@ -103,20 +103,20 @@ class MineBlock extends Component {
                     <div className={classes.loading}>
                       <CircularProgress />
                     </div>
-                  );
-                if (loading || !data) return null;
+                  )
+                if (loading || !data) return null
 
-                const { blockMined } = data;
-                const { index, hash } = blockMined;
+                const { blockMined } = data
+                const { index, hash } = blockMined
 
-                return <MinedBlockSnackbar index={index} hash={hash} />;
+                return <MinedBlockSnackbar index={index} hash={hash} />
               }}
             </Subscription>
           </React.Fragment>
         )}
       </Mutation>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(MineBlock);
+export default withStyles(styles)(MineBlock)
