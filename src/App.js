@@ -18,8 +18,9 @@ import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-const wsurl = 'ws://localhost:8000/graphql'
-const httpurl = 'http://localhost:8000/graphql'
+const port = process.env.REACT_APP_GRAPHQL_PORT || 8000
+const wsurl = `ws://localhost:${port}/graphql`
+const httpurl = `http://localhost:${port}/graphql`
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
