@@ -43,10 +43,6 @@ class CreateTransaction extends Component {
   validateForm(values) {
     let errors = {};
     return errors;
-    if (!values.password) {
-      errors.password = true;
-    }
-    return errors;
   }
 
   handleTransactionCreation = res =>
