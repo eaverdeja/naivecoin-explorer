@@ -1,39 +1,35 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography/Typography';
-import { Subscription } from 'react-apollo';
-import Subscriptions from '../../graphql/subscriptions';
-import DrawerTerminal from '../../components/UI/DrawerTerminal';
+import React from 'react'
+import Grid from '@material-ui/core/Grid/Grid'
+import { Query } from 'react-apollo'
+import Queries from '../../graphql/queries'
+import ServerLogStream from './ServerLogStream'
 
-const styles = theme => ({
-  root: {
-    marginTop: theme.spacing.unit * 9,
-    marginLeft: theme.spacing.unit
-  }
-});
-
-const serverLog = ({ classes }) => (
-  <Grid container>
-    <Grid item xs={12}>
-      <Subscription subscription={Subscriptions.SERVER_LOG_UPDATE}>
-        {({ loading, error, data }) => {
-          if (error) return null;
-          let terminal = null;
-          if (!loading && data) {
-            terminal = <DrawerTerminal output={data.serverLogUpdate} />;
-          }
-
-          return (
-            <div className={classes.root}>
-              <Typography variant="display1" gutterBottom>Server Log</Typography>
-              {terminal}
-            </div>
-          );
-        }}
-      </Subscription>
+const serverLog = () => {
+  return (
+    <Grid container>
+      <Grid item xs={12}>
+        <Query query={Queries.SERVER_LOG}>
+          {({ loading, error, data }) => {
+            let log = ''
+            if (error || loading) return null
+            if (!loading && data) {
+              try {
+                data.serverLog.split('\n').map(jsonPayload => {
+                  if (jsonPayload.trim() !== '') {
+                    const payload = JSON.parse(jsonPayload)
+                    log += payload.message + '\n\n'
+                  }
+                })
+              } catch (ex) {
+                console.log(ex)
+              }
+            }
+            return <ServerLogStream initialPayload={log} />
+          }}
+        </Query>
+      </Grid>
     </Grid>
-  </Grid>
-);
+  )
+}
 
-export default withStyles(styles)(serverLog);
+export default serverLog
