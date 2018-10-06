@@ -1,10 +1,10 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
-import { Query } from 'react-apollo';
-import ReactJson from 'react-json-view';
-import Panel from '../../components/UI/Panel';
-import Queries from '../../graphql/queries';
+import React from 'react'
+import Paper from '@material-ui/core/Paper'
+import { withStyles } from '@material-ui/core/styles'
+import { Query } from 'react-apollo'
+import ReactJson from 'react-json-view'
+import Panel from '../../components/UI/Panel'
+import Queries from '../../graphql/queries'
 
 const styles = theme => ({
   jsonTree: {
@@ -13,18 +13,24 @@ const styles = theme => ({
     overflowY: 'auto',
     padding: theme.spacing.unit * 3
   }
-});
+})
 
 const blockJsonTree = ({ blocks, classes, limit = 2, depth = 0 }) => {
   return (
     <Query query={Queries.GET_ALL_BLOCKS}>
       {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>;
+        if (loading) return <p>Loading...</p>
+        if (error) return <p>Error :(</p>
 
         const omitTypename = (key, value) =>
-          key === '__typename' ? undefined : value;
-        const blocks = JSON.parse(JSON.stringify(data.blocks), omitTypename);
+          key === '__typename' ? undefined : value
+
+        let blocks = null
+        try {
+          blocks = JSON.parse(JSON.stringify(data.blocks), omitTypename)
+        } catch (exception) {
+          return <p>Error :(</p>
+        }
 
         return (
           <Panel title="All Blocks (JSON view)">
@@ -32,10 +38,10 @@ const blockJsonTree = ({ blocks, classes, limit = 2, depth = 0 }) => {
               <ReactJson collapsed={depth} src={blocks} />
             </Paper>
           </Panel>
-        );
+        )
       }}
     </Query>
-  );
-};
+  )
+}
 
-export default withStyles(styles)(blockJsonTree);
+export default withStyles(styles)(blockJsonTree)
