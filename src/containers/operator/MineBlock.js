@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Mutation, Subscription } from 'react-apollo'
+import { Formik, Form, Field } from 'formik'
+import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
 import Snackbar from '@material-ui/core/Snackbar'
 import { withStyles } from '@material-ui/core/styles'
@@ -18,6 +20,11 @@ const styles = theme => ({
     padding: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 3
   },
+  field: {
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit,
+    width: 320
+  },
   button: {
     marginLeft: theme.spacing.unit * 3
   },
@@ -32,13 +39,7 @@ class MineBlock extends Component {
     notifying: false
   }
 
-  constructor(props) {
-    super(props)
-    this.terminal = React.createRef()
-  }
-
-  handleMineBlock = mineBlock => {
-    mineBlock()
+  handleMineBlock = () => {
     this.setState({ mining: true })
   }
 
@@ -54,6 +55,66 @@ class MineBlock extends Component {
 
   render() {
     const { classes } = this.props
+
+    const renderForm = ({ mineBlock, loading, error }) => (
+      <Formik
+        initialValues={{ rewardAddress: '', feeAddress: '' }}
+        validate={this.validateForm}
+        onSubmit={({ rewardAddress, feeAddress }, { setSubmitting }) => {
+          mineBlock({ variables: { rewardAddress, feeAddress } })
+          this.handleMineBlock()
+          setSubmitting(false)
+        }}
+      >
+        {({ values, errors, touched, isSubmitting }) => (
+          <Form>
+            <Grid container spacing={24}>
+              <Grid item xs={12}>
+                <Field
+                  name="rewardAddress"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      className={classes.field}
+                      value={field.value.rewardAddress}
+                      type="text"
+                      placeholder="Reward Address"
+                      error={errors.rewardAddress && touched.rewardAddress}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="feeAddress"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      className={classes.field}
+                      value={field.value.feeAddress}
+                      type="text"
+                      placeholder="Fee Address"
+                      error={errors.feeAddress && touched.feeAddress}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  className={classes.button}
+                  type="submit"
+                  variant="contained"
+                  disabled={isSubmitting || loading}
+                >
+                  Mine
+                </Button>
+              </Grid>
+              {error && <p>{error.message}</p>}
+            </Grid>
+          </Form>
+        )}
+      </Formik>
+    )
 
     const MinedBlockSnackbar = ({ index, hash }) => (
       <Snackbar
@@ -75,10 +136,6 @@ class MineBlock extends Component {
     return (
       <Mutation
         mutation={Mutations.MINE_BLOCK}
-        variables={{
-          rewardAddress:
-            '1bdb5b0eed39cfa998389f4e9aa188c53e18e0eb9949a40980025ca825f9daad'
-        }}
         onCompleted={this.handleMinedBlock}
       >
         {(mineBlock, { loading, error }) => (
@@ -86,13 +143,7 @@ class MineBlock extends Component {
             <Panel className={classes.root} title="Mine Block">
               <Grid container spacing={24}>
                 <Grid item xs={12}>
-                  <Button
-                    variant="contained"
-                    className={classes.button}
-                    onClick={() => this.handleMineBlock(mineBlock)}
-                  >
-                    Mine
-                  </Button>
+                  {renderForm({ mineBlock, loading, error })}
                 </Grid>
               </Grid>
             </Panel>
