@@ -6,4 +6,10 @@ const SERVER_LOG = gql`
   }
 `
 
-export { SERVER_LOG }
+const CONNECTED_PEERS = gql`
+  query {
+    connectedPeers
+  }
+`
+
+export { SERVER_LOG, CONNECTED_PEERS }
