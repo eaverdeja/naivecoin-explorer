@@ -1,10 +1,10 @@
-import React from 'react';
-import { Query } from 'react-apollo';
-import Queries from '../../graphql/queries';
-import Typography from '@material-ui/core/Typography/Typography';
-import TransactionSummary from '../../components/transaction/TransactionSummary';
-import TransactionDetails from '../../components/transaction/TransactionDetails';
-import Panel from '../../components/UI/Panel';
+import React from 'react'
+import { Query } from 'react-apollo'
+import Queries from '../../graphql/queries'
+import Typography from '@material-ui/core/Typography/Typography'
+import TransactionSummary from '../../components/transaction/TransactionSummary'
+import TransactionDetails from '../../components/transaction/TransactionDetails'
+import Panel from '../../components/UI/Panel'
 
 const transaction = ({ match, history }) => (
   <Query
@@ -14,9 +14,8 @@ const transaction = ({ match, history }) => (
     {({ loading, error, data }) => {
       let transaction = (
         <Typography>Transaction not found or not confirmed</Typography>
-      );
+      )
 
-      console.log(data);
       if (!loading && !error && data) {
         transaction = (
           <React.Fragment>
@@ -28,7 +27,7 @@ const transaction = ({ match, history }) => (
               />
             </Panel>
           </React.Fragment>
-        );
+        )
       }
       return (
         <React.Fragment>
@@ -37,9 +36,9 @@ const transaction = ({ match, history }) => (
           </Typography>
           {transaction}
         </React.Fragment>
-      );
+      )
     }}
   </Query>
-);
+)
 
-export default transaction;
+export default transaction
