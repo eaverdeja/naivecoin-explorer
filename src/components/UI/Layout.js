@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { Route } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import ServerLog from '../../containers/operator/ServerLog';
+import React, { Component } from 'react'
+import classNames from 'classnames'
+import { withStyles } from '@material-ui/core/styles'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import List from '@material-ui/core/List'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import { Route } from 'react-router-dom'
+import Sidebar from './Sidebar'
+import ServerLog from '../../containers/operator/ServerLog'
+import ConnectedPeers from '../../containers/operator/ConnectedPeers'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const styles = theme => ({
   root: {
@@ -78,7 +79,7 @@ const styles = theme => ({
     }
   },
   serverLogDrawer: {
-    width: theme.spacing.unit * 60,
+    width: theme.spacing.unit * 60
   },
   serverLogDrawerClose: {
     width: theme.spacing.unit
@@ -91,7 +92,7 @@ const styles = theme => ({
     height: '100vh',
     overflowX: 'auto'
   }
-});
+})
 
 const theme = createMuiTheme({
   palette: {
@@ -106,24 +107,24 @@ const theme = createMuiTheme({
   typography: {
     htmlFontSize: 15
   }
-});
+})
 
 class Layout extends Component {
   state = {
     sidebarOpen: false,
     serverLogOpen: true
-  };
+  }
 
   handleDrawerOpen = () => {
-    this.setState({ sidebarOpen: true, serverLogOpen: false });
-  };
+    this.setState({ sidebarOpen: true, serverLogOpen: false })
+  }
 
   handleDrawerClose = () => {
-    this.setState({ sidebarOpen: false, serverLogOpen: true });
-  };
+    this.setState({ sidebarOpen: false, serverLogOpen: true })
+  }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children } = this.props
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -200,13 +201,14 @@ class Layout extends Component {
             open={this.state.serverLogOpen}
           >
             <div className={classes.serverLog}>
+              <ConnectedPeers />
               <ServerLog />
             </div>
           </Drawer>
         </div>
       </MuiThemeProvider>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(Layout);
+export default withStyles(styles)(Layout)

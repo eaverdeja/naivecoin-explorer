@@ -1,8 +1,8 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
-import Grid from '@material-ui/core/Grid/Grid';
-import CreateTransaction from '../containers/transactions/CreateTransaction';
-import MineBlock from '../containers/operator/MineBlock';
+import React from 'react'
+import Typography from '@material-ui/core/Typography/Typography'
+import Grid from '@material-ui/core/Grid/Grid'
+import CreateTransaction from '../containers/transactions/CreateTransaction'
+import MineBlock from '../containers/operator/MineBlock'
 
 const operator = props => (
   <React.Fragment>
@@ -18,6 +18,6 @@ const operator = props => (
       </Grid>
     </Grid>
   </React.Fragment>
-);
+)
 
-export default operator;
+export default operator

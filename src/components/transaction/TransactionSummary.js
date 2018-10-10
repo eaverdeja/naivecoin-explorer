@@ -1,15 +1,15 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
-import classNames from 'classnames';
-import InputList from './InputList';
-import OutputList from './OutputList';
-import moment from 'moment';
-import { hashResume } from '../../utils/index';
+import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardHeader from '@material-ui/core/CardHeader'
+import Typography from '@material-ui/core/Typography'
+import classNames from 'classnames'
+import InputList from './InputList'
+import OutputList from './OutputList'
+import moment from 'moment'
+import { hashResume } from '../../utils/index'
 
 const styles = theme => ({
   card: {
@@ -40,7 +40,7 @@ const styles = theme => ({
   capitalize: {
     textTransform: 'capitalize'
   }
-});
+})
 
 const transactionSummary = ({ transaction, classes, history }) => {
   return (
@@ -54,7 +54,7 @@ const transactionSummary = ({ transaction, classes, history }) => {
                 [classes.feeTx]: transaction.type === 'fee',
                 [classes.rewardTx]: transaction.type === 'reward'
               })}
-              title={`ID | ${hashResume(transaction.id, 16)}`}
+              title={hashResume(transaction.id, 16)}
               subheader={
                 <React.Fragment>
                   <Typography variant="caption">
@@ -88,7 +88,7 @@ const transactionSummary = ({ transaction, classes, history }) => {
         </Grid>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default withStyles(styles)(transactionSummary);
+export default withStyles(styles)(transactionSummary)
