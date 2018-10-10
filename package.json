@@ -13,6 +13,7 @@
     "moment": "^2.22.2",
     "react": "^16.5.0",
     "react-apollo": "^2.1.11",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.5.0",
     "react-json-view": "^1.19.1",
     "react-router-dom": "^4.3.1",
