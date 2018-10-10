@@ -80,10 +80,13 @@ const transactionSummary = ({ transaction, classes, history }) => {
             />
           </Grid>
           <Grid item xs={6}>
-            <InputList inputs={transaction.inputs} txId={transaction.id} />
+            <InputList inputs={transaction.data.inputs} txId={transaction.id} />
           </Grid>
           <Grid item xs={6}>
-            <OutputList outputs={transaction.outputs} txId={transaction.id} />
+            <OutputList
+              outputs={transaction.data.outputs}
+              txId={transaction.id}
+            />
           </Grid>
         </Grid>
       </CardContent>

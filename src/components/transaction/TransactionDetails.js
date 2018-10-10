@@ -1,15 +1,15 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography/Typography';
-import Panel from '../../components/UI/Panel';
-import { hashResume } from '../../utils/index';
+import React from 'react'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Divider from '@material-ui/core/Divider'
+import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography/Typography'
+import Panel from '../../components/UI/Panel'
+import { hashResume } from '../../utils/index'
 
 const styles = theme => ({
   content: {
@@ -18,7 +18,7 @@ const styles = theme => ({
   capitalize: {
     textTransform: 'capitalize'
   }
-});
+})
 
 const transactionDetails = ({ transaction, classes }) => (
   <Panel title="Details">
@@ -29,13 +29,17 @@ const transactionDetails = ({ transaction, classes }) => (
             <ListItem>
               <ListItemText primary="ID" />
               <ListItemSecondaryAction>
-                <Typography variant="caption">{hashResume(transaction.id)}</Typography>
+                <Typography variant="caption">
+                  {hashResume(transaction.id)}
+                </Typography>
               </ListItemSecondaryAction>
             </ListItem>
             <ListItem>
               <ListItemText primary="Hash" />
               <ListItemSecondaryAction>
-                <Typography variant="caption">{hashResume(transaction.hash)}</Typography>
+                <Typography variant="caption">
+                  {hashResume(transaction.hash)}
+                </Typography>
               </ListItemSecondaryAction>
             </ListItem>
             <ListItem>
@@ -50,7 +54,7 @@ const transactionDetails = ({ transaction, classes }) => (
               <ListItemText primary="# of Inputs" />
               <ListItemSecondaryAction>
                 <Typography variant="caption">
-                  {transaction.inputs.length || 'Newly generated coins'}
+                  {transaction.data.inputs.length || 'Newly generated coins'}
                 </Typography>
               </ListItemSecondaryAction>
             </ListItem>
@@ -58,7 +62,7 @@ const transactionDetails = ({ transaction, classes }) => (
               <ListItemText primary="# of Outputs" />
               <ListItemSecondaryAction>
                 <Typography variant="caption">
-                  {transaction.outputs.length}
+                  {transaction.data.outputs.length}
                 </Typography>
               </ListItemSecondaryAction>
             </ListItem>
@@ -68,6 +72,6 @@ const transactionDetails = ({ transaction, classes }) => (
       </Grid>
     </Grid>
   </Panel>
-);
+)
 
-export default withStyles(styles)(transactionDetails);
+export default withStyles(styles)(transactionDetails)

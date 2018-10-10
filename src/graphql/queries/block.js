@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
 const GET_ALL_BLOCKS = gql`
   query {
@@ -12,21 +12,23 @@ const GET_ALL_BLOCKS = gql`
         id
         hash
         type
-        inputs {
-          transaction
-          index
-          amount
-          address
-          signature
-        }
-        outputs {
-          amount
-          address
+        data {
+          inputs {
+            transaction
+            index
+            amount
+            address
+            signature
+          }
+          outputs {
+            amount
+            address
+          }
         }
       }
     }
   }
-`;
+`
 
 const GET_LATEST_BLOCKS = gql`
   query {
@@ -41,7 +43,7 @@ const GET_LATEST_BLOCKS = gql`
       }
     }
   }
-`;
+`
 
 const GET_BLOCK = gql`
   query getBlockByHash($hash: String!) {
@@ -57,20 +59,22 @@ const GET_BLOCK = gql`
         id
         hash
         type
-        inputs {
-          transaction
-          index
-          amount
-          address
-          signature
-        }
-        outputs {
-          amount
-          address
+        data {
+          inputs {
+            transaction
+            index
+            amount
+            address
+            signature
+          }
+          outputs {
+            amount
+            address
+          }
         }
       }
     }
   }
-`;
+`
 
-export { GET_ALL_BLOCKS, GET_LATEST_BLOCKS, GET_BLOCK };
+export { GET_ALL_BLOCKS, GET_LATEST_BLOCKS, GET_BLOCK }

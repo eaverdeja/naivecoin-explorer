@@ -1,16 +1,16 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
-import { Query } from 'react-apollo';
-import { hashResume } from '../../utils';
+import React from 'react'
+import Typography from '@material-ui/core/Typography/Typography'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
+import { withStyles } from '@material-ui/core/styles'
+import { Query } from 'react-apollo'
+import { hashResume } from '../../utils'
 import moment from 'moment'
-import Panel from '../../components/UI/Panel';
+import Panel from '../../components/UI/Panel'
 import Queries from '../../graphql/queries'
 
 const styles = theme => ({
@@ -22,7 +22,7 @@ const styles = theme => ({
       backgroundColor: theme.palette.background.default
     }
   }
-});
+})
 
 const unconfirmedTransactions = ({
   transactions,
@@ -31,15 +31,18 @@ const unconfirmedTransactions = ({
   pollInterval = 3000
 }) => {
   return (
-    <Query query={Queries.GET_UNCONFIRMED_TRANSACTIONS} pollInterval={pollInterval}>
+    <Query
+      query={Queries.GET_UNCONFIRMED_TRANSACTIONS}
+      pollInterval={pollInterval}
+    >
       {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>;
+        if (loading) return <p>Loading...</p>
+        if (error) return <p>Error :(</p>
 
         return (
           <Panel title="Unconfirmed Transactions">
             <Typography variant="caption" gutterBottom>
-              Last update: {moment().format("DD/MM/YYYY, h:mm:ss")}
+              Last update: {moment().format('DD/MM/YYYY, h:mm:ss')}
             </Typography>
             <Paper>
               <Table className={classes.table}>
@@ -62,7 +65,7 @@ const unconfirmedTransactions = ({
                         <TableCell>{hashResume(unconfirmedTx.hash)}</TableCell>
                         <TableCell>{unconfirmedTx.type}</TableCell>
                         <TableCell>
-                          {unconfirmedTx.outputs.reduce(
+                          {unconfirmedTx.data.outputs.reduce(
                             (prev, curr) => prev + curr.amount,
                             0
                           )}
@@ -73,10 +76,10 @@ const unconfirmedTransactions = ({
               </Table>
             </Paper>
           </Panel>
-        );
+        )
       }}
     </Query>
-  );
-};
+  )
+}
 
-export default withStyles(styles)(unconfirmedTransactions);
+export default withStyles(styles)(unconfirmedTransactions)
